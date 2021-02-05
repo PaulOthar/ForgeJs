@@ -371,81 +371,6 @@ class ShapeManager {
 class GraphicsManager{
     constructor(){}
 
-    //Some Properties to choose from:
-    //Line Cap:
-    static lineCap_butt = 'butt';
-    static lineCap_round = 'round';
-    static lineCap_square = 'square';
-    static SetLineCap(Context,Line_Cap){
-        if(Line_Cap){
-            Context.lineCap = Line_Cap;
-        }
-    }
-    //Line Join:
-    static lineJoin_bevel = 'bevel';
-    static lineJoin_round = 'round';
-    static lineJoin_miter = 'miter';
-    static SetLineJoin(Context,Line_Join){
-        if(Line_Join){
-            Context.lineJoin = Line_Join;
-        }
-    }
-    //Font Style
-    static fontStyle_normal = 'normal';
-    static fontStyle_italic = 'italic';
-    static fontStyle_oblique = 'oblique';
-    //Font Variant:
-    static fontVariant_normal = 'normal';
-    static fontVariant_small_caps = 'small-caps';
-    //Font Weight:
-    static fontWeight_normal = 'normal';
-    static fontWeight_bold = 'bold';
-    static fontWeight_bolder = 'bolder';
-    static fontWeight_lighter = 'lighter';
-    static fontWeight_300 = '300';
-    static fontWeight_600 = '600';
-    static fontWeight_900 = '900';
-    //Font Size:
-    static FontSize(Pixels){
-        return `${Pixels}px`;
-    }
-    //Font Family:
-    static FontFamily_monospace = 'monospace';
-    static FontFamily_serif = 'serif';
-    static FontFamily_sans_serif = 'sans-serif';
-    static FontFamily_cursive =	 'cursive';
-    static FontFamily_fantasy = 'fantasy';
-    static FontFamily_Courier_New = 'Courier New';
-    static FontFamily_Verdana = 'Verdana';
-    static FontFamily_Arial = 'Arial';
-    //Buld Font:
-    static BuildFont(Family,Size,Weight,Variant,Style){
-        return `${Style} ${Variant} ${Weight} ${Size} ${Family}`;
-    }
-    //Text Alignment:
-    static textAlign_start = 'start';
-    static textAlign_end = 'end';
-    static textAlign_center = 'center';
-    static textAlign_left = 'left';
-    static textAlign_right = 'right';
-    static SetTextAlignment(Context,Alignment){
-        if(Alignment){
-            Context.textAlign = Alignment;
-        }
-    }
-    //Text Baseline:
-    static textBaseline_alphabetic = 'alphabetic';
-    static textBaseline_top = 'top';
-    static textBaseline_hanging	 = 'hanging	';
-    static textBaseline_middle = 'middle';
-    static textBaseline_ideographic = 'ideographic';
-    static textBaseline_bottom = 'bottom';
-    static SetTextBaseline(Context,Baseline){
-        if(Baseline){
-            Context.textBaseline = Baseline;
-        }
-    }
-
     //Main Canvas Methods
     static GetCanvasElementByName(Canvas_Name){
         return document.getElementById(Canvas_Name);
@@ -698,6 +623,74 @@ class GraphicsManager{
         return gradient;
     }
 }
+class PropertyIndex{
+    constructor(){}
+
+    //Some Properties to choose from:
+
+    //Line Cap:
+    static lineCap_butt = 'butt';
+    static lineCap_round = 'round';
+    static lineCap_square = 'square';
+
+    //Line Join:
+    static lineJoin_bevel = 'bevel';
+    static lineJoin_round = 'round';
+    static lineJoin_miter = 'miter';
+
+    //Font Style
+    static fontStyle_normal = 'normal';
+    static fontStyle_italic = 'italic';
+    static fontStyle_oblique = 'oblique';
+
+    //Font Variant:
+    static fontVariant_normal = 'normal';
+    static fontVariant_small_caps = 'small-caps';
+
+    //Font Weight:
+    static fontWeight_normal = 'normal';
+    static fontWeight_bold = 'bold';
+    static fontWeight_bolder = 'bolder';
+    static fontWeight_lighter = 'lighter';
+    static fontWeight_300 = '300';
+    static fontWeight_600 = '600';
+    static fontWeight_900 = '900';
+
+    //Font Size:
+    static FontSize(Pixels){
+        return `${Pixels}px`;
+    }
+
+    //Font Family:
+    static FontFamily_monospace = 'monospace';
+    static FontFamily_serif = 'serif';
+    static FontFamily_sans_serif = 'sans-serif';
+    static FontFamily_cursive =	 'cursive';
+    static FontFamily_fantasy = 'fantasy';
+    static FontFamily_Courier_New = 'Courier New';
+    static FontFamily_Verdana = 'Verdana';
+    static FontFamily_Arial = 'Arial';
+
+    //Buld Font:
+    static BuildFont(Family,Size,Weight,Variant,Style){
+        return `${Style} ${Variant} ${Weight} ${Size} ${Family}`;
+    }
+
+    //Text Alignment:
+    static textAlign_start = 'start';
+    static textAlign_end = 'end';
+    static textAlign_center = 'center';
+    static textAlign_left = 'left';
+    static textAlign_right = 'right';
+
+    //Text Baseline:
+    static textBaseline_alphabetic = 'alphabetic';
+    static textBaseline_top = 'top';
+    static textBaseline_hanging	 = 'hanging	';
+    static textBaseline_middle = 'middle';
+    static textBaseline_ideographic = 'ideographic';
+    static textBaseline_bottom = 'bottom';
+}
 
 //Execution Section
 GraphicsManager.SetHTMLBackgroundColor('black');
@@ -705,4 +698,4 @@ GraphicsManager.DrawAxis('canvas','2d','white',1,false);
 
 GraphicsManager.DrawPolygonGrid(GraphicsManager.GetCanvasContextByName('canvas'),ShapeManager.DiamondQuadrilateralMatrix(400,100,10,10,64,32),"green",false,false,false);
 GraphicsManager.LoadState(GraphicsManager.GetCanvasContextByName('canvas'));
-GraphicsManager.DrawText(GraphicsManager.GetCanvasContextByName('canvas'),"Aha, Uhul, eu to Malucow",100,100,GraphicsManager.BuildFont(GraphicsManager.FontFamily_cursive,GraphicsManager.FontSize(50),GraphicsManager.fontWeight_900,GraphicsManager.fontVariant_small_caps,GraphicsManager.fontStyle_italic),'white','red',false,false);
+GraphicsManager.DrawText(GraphicsManager.GetCanvasContextByName('canvas'),"Aha, Uhul, eu to Malucow",100,100,PropertyIndex.BuildFont(PropertyIndex.FontFamily_cursive,PropertyIndex.FontSize(50),PropertyIndex.fontWeight_900,PropertyIndex.fontVariant_small_caps,PropertyIndex.fontStyle_italic),'white','red',false,false);
