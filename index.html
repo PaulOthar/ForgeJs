@@ -11,8 +11,29 @@
     <canvas id="canvas" , width="1350" , height="600" , style="border:1px solid #000000;">
     </canvas>
 
-    <script src='js/index2.js'>
-    </script>
+
+    <form>
+        <input type="color" id="color" name="color">
+        <input type="button" id="norcol" value="Set Background Color">
+        <input type="button" id="invcol" value="Set Inverted Background Color">
+    </form>
+
+
+    <input type="range" id="Red" name="Red" min="0" max="255" value="0">
+    <input type="range" id="Green" name="Green" min="0" max="255" value="0">
+    <input type="range" id="Blue" name="Blue" min="0" max="255" value="0">
+
+
+    <script src="js/GraphicManager.js"></script>
+    <script src="js/CanvasPropertyIndex.js"></script>
+    <script src="js/ShapeManager.js"></script>
+    <script src="js/CustomMath.js"></script>
+    <script src="js/AnalyticGeometry.js"></script>
+    <script src="js/MouseManager.js"></script>
+    
+    <script src="js/main.js"></script>
+
+    <script src="js/Gambiarra.js"></script>
 </body>
 
 </html>
