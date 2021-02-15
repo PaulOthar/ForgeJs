@@ -14,6 +14,10 @@ class AnalyticGeometry {
         return (rad * 180) / (Math.PI);
     }
 
+    static DegreeToRad(deg) {
+        return (deg * Math.PI) / 180;
+    }
+
     static AxisAngle(axis, module) {
         //Angle of the Axis = arccosine of Axis/Module
         return AnalyticGeometry.RadToDegree(Math.acos(axis / module));
@@ -46,6 +50,115 @@ class AnalyticGeometry {
 
     static ModuleFromMiddle(width, height, x, y) {
         return AnalyticGeometry.Module(AnalyticGeometry.XFromMiddle(x, width), AnalyticGeometry.YFromMiddle(y, height));
+    }
+
+    //Some Trigonometry Stuff
+
+    static XFromAngle(angle) {
+        return Math.cos(AnalyticGeometry.DegreeToRad(angle));
+    }
+
+    static YFromAngle(angle) {
+        return Math.sin(AnalyticGeometry.DegreeToRad(angle));
+    }
+
+    static Apothem(NumberOfSides, SideSize) {
+        /*
+        S = Side Size
+        N = Number of Sides
+
+        Apothem = S/(2*tan(PI/N))
+        */
+        return SideSize / (2 * Math.tan(Math.PI / NumberOfSides));
+    }
+
+    static RadiusFromInscribedPolygon(NumberOfSides, SideSize) {
+        /*
+        S = Side Size
+
+        Radius = Sqrt((Apothem)+(S/2)²)
+        */
+        let apothem = AnalyticGeometry.Apothem(NumberOfSides, SideSize);
+
+        return Math.sqrt(Math.pow(apothem, 2) + Math.pow((SideSize / 2), 2));
+    }
+
+    //Experimental
+
+    //Regular Polygon
+
+    static GetPointInCircleByDegree(Degree, Radius) {
+        let x, y;
+
+        x = AnalyticGeometry.XFromAngle(Degree) * Radius;
+        y = AnalyticGeometry.YFromAngle(Degree) * Radius;
+
+        return [x, y];
+    }
+
+    static RegularPolygon(center_x, center_y, SideSize, NumberOfSides, StartingAngle) {
+        let Coordinates = [];
+        let Radius = AnalyticGeometry.RadiusFromInscribedPolygon(NumberOfSides, SideSize);
+
+        Coordinates = AnalyticGeometry.RadiusLimitedRegularPolygon(center_x, center_y, Radius, NumberOfSides, StartingAngle);
+        return Coordinates;
+
+    }
+
+    static RadiusLimitedRegularPolygon(center_x, center_y, Radius, NumberOfSides, StartingAngle) {
+        let Coordinates = [];
+        let X = [];
+        let Y = [];
+        let current_point;
+        let degrees = 360 / NumberOfSides;
+
+        for (let i = 0; i < NumberOfSides; i++) {
+            current_point = AnalyticGeometry.GetPointInCircleByDegree(degrees * i + StartingAngle, Radius);
+            X.push(current_point[0] + center_x);
+            Y.push(current_point[1] + center_y);
+        }
+
+        Coordinates.push(X);
+        Coordinates.push(Y);
+
+        return Coordinates;
+    }
+
+    //Irregular Polygon
+
+    static GetModifiedPointInCircleByDegree(Degree, Radius, X_Modifier, Y_Modifier) {
+        let x, y;
+
+        x = (AnalyticGeometry.XFromAngle(Degree) / X_Modifier) * Radius;
+        y = (AnalyticGeometry.YFromAngle(Degree) / Y_Modifier) * Radius;
+
+        return [x, y];
+    }
+
+    static IrregularPolygon(center_x, center_y, SideSize, NumberOfSides, StartingAngle, X_Modifier, Y_Modifier) {
+        let Coordinates = [];
+        let Radius = AnalyticGeometry.RadiusFromInscribedPolygon(NumberOfSides, SideSize);
+
+        Coordinates = AnalyticGeometry.RadiusLimitedIrregularPolygon(center_x, center_y, Radius, NumberOfSides, StartingAngle, X_Modifier, Y_Modifier);
+        return Coordinates;
+    }
+    static RadiusLimitedIrregularPolygon(center_x, center_y, Radius, NumberOfSides, StartingAngle, X_Modifier, Y_Modifier) {
+        let Coordinates = [];
+        let X = [];
+        let Y = [];
+        let current_point;
+        let degrees = 360 / NumberOfSides;
+
+        for (let i = 0; i < NumberOfSides; i++) {
+            current_point = AnalyticGeometry.GetModifiedPointInCircleByDegree(degrees * i + StartingAngle, Radius, X_Modifier, Y_Modifier);
+            X.push(current_point[0] + center_x);
+            Y.push(current_point[1] + center_y);
+        }
+
+        Coordinates.push(X);
+        Coordinates.push(Y);
+
+        return Coordinates;
     }
 
     //Deprecated
