@@ -1,0 +1,26 @@
+.slider{
+    -webkit-appearance: none;
+    border-radius: 5px;
+    width: 10%;
+    height: 15px;
+}
+.slider:hover {
+    opacity: 1;
+  }
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #000000;
+    cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    background: #000000;
+    cursor: pointer;
+  }

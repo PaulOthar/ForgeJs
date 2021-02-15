@@ -108,7 +108,7 @@ class CustomMath {
                 output = "00"
                 break;
             case 1:
-                output = newvalue+"0";
+                output = newvalue + "0";
                 break;
             default:
                 output = newvalue;
