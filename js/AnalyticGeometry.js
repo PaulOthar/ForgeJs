@@ -52,6 +52,30 @@ class AnalyticGeometry {
         return AnalyticGeometry.Module(AnalyticGeometry.XFromMiddle(x, width), AnalyticGeometry.YFromMiddle(y, height));
     }
 
+    static ModulesOfPolygon(Polygon){
+        let Modules = [];
+        let X = Polygon[0];
+        let Y = Polygon[1];
+        let Current_x = 0;
+        let Current_y = 0;
+
+        for (let i = 0; i < X.length && i < Y.length; i++) {
+            if (i > 0) {
+                let Axis_x = AnalyticGeometry.AxisVector(Current_x,X[i]);
+                let Axis_y = AnalyticGeometry.AxisVector(Current_y,Y[i]);
+                Modules.push(AnalyticGeometry.Module(Axis_x,Axis_y));
+            }
+            Current_x = X[i];
+            Current_y = Y[i];
+        }
+
+        let Axis_x = AnalyticGeometry.AxisVector(Current_x,X[0]);
+        let Axis_y = AnalyticGeometry.AxisVector(Current_y,Y[0]);
+        Modules.push(AnalyticGeometry.Module(Axis_x,Axis_y));
+
+        return Modules;
+    }
+
     //Some Trigonometry Stuff
 
     static XFromAngle(angle) {
@@ -160,6 +184,142 @@ class AnalyticGeometry {
 
         return Coordinates;
     }
+
+    //Testing
+    static DifferentSidesIrregularPolygon(center_x, center_y,ArrayOfSidesBySize){
+        let ArrayOfSides = [];
+        let ArrayOfAngles = [];
+        let total = 0;
+        let Medium = 0;
+        let Coordinates = [];
+        let X = [];
+        let Y = [];
+        let current_point;
+        let current_Angle = 0;
+        let Biggest_Side = 0;
+        let Radius = 0;
+        ArrayOfSides = ArrayOfSidesBySize;
+
+        for(let i = 0;i<ArrayOfSides.length;i++){
+            if(ArrayOfSides[i] > Biggest_Side){
+                Biggest_Side = ArrayOfSides[i];
+            }
+            total += ArrayOfSides[i];
+        }
+
+        for(let i = 0;i<ArrayOfSides.length;i++){
+            ArrayOfAngles.push((360*ArrayOfSides[i])/total);
+        }
+
+        console.log("ArrayOfAngles:",ArrayOfAngles);
+
+        Medium = total/ArrayOfSides.length;
+
+        Radius = AnalyticGeometry.RadiusFromInscribedPolygon(ArrayOfSides.length,Medium);
+
+        for (let i = 0; i < ArrayOfSides.length; i++) {
+            current_Angle += ArrayOfAngles[i];
+
+            console.log(Radius);
+
+            current_point = AnalyticGeometry.GetPointInCircleByDegree(current_Angle, Radius);
+
+            X.push(current_point[0] + center_x);
+            Y.push(current_point[1] + center_y);
+        }
+
+        Coordinates.push(X);
+        Coordinates.push(Y);
+
+        return Coordinates;
+    }
+
+    //Deprecated
+    /*
+    static DifferentSidesIrregularPolygon(center_x, center_y,ArrayOfSidesBySize){
+        let ArrayOfSides = [];
+        let ArrayOfAngles = [];
+        let total = 0;
+        let Medium = 0;
+        let Coordinates = [];
+        let X = [];
+        let Y = [];
+        let current_point;
+        let current_Angle = 0;
+        ArrayOfSides = ArrayOfSidesBySize;
+
+        for(let i = 0;i<ArrayOfSides.length;i++){
+            total += ArrayOfSides[i];
+        }
+
+        Medium = total/ArrayOfSides.length;
+
+        for(let i = 0;i<ArrayOfSides.length;i++){
+            ArrayOfAngles.push((360*ArrayOfSides[i])/total);
+        }
+
+        console.log("ArrayOfAngles:",ArrayOfAngles);
+
+        for (let i = 0; i < ArrayOfSides.length; i++) {
+            current_Angle += ArrayOfAngles[i];
+            let Current_Radius = 0;
+            let Current_Virtual_Polygon_Sides = 360/ArrayOfAngles[i];
+
+            Current_Radius = AnalyticGeometry.RadiusFromInscribedPolygon(Current_Virtual_Polygon_Sides,ArrayOfSides[i]);
+
+            console.log(Current_Radius);
+
+            current_point = AnalyticGeometry.GetPointInCircleByDegree(current_Angle, Current_Radius);
+
+            X.push(current_point[0] + center_x);
+            Y.push(current_point[1] + center_y);
+        }
+
+        Coordinates.push(X);
+        Coordinates.push(Y);
+
+        return Coordinates;
+    }
+    */
+
+    /*
+    static DifferentSidesIrregularPolygon(center_x, center_y,ArrayOfSidesBySize){
+        let ArrayOfSides = [];
+        let ArrayOfAngles = [];
+        let total = 0;
+        let Medium = 0;
+        let Coordinates = [];
+        let X = [];
+        let Y = [];
+        let current_point;
+        let current_Angle = 0;
+        ArrayOfSides = ArrayOfSidesBySize;
+
+        for(let i = 0;i<ArrayOfSides.length;i++){
+            total += ArrayOfSides[i];
+        }
+
+        Medium = total/ArrayOfSides.length;
+
+        for(let i = 0;i<ArrayOfSides.length;i++){
+            ArrayOfAngles.push((360*ArrayOfSides[i])/total);
+        }
+
+        for (let i = 0; i < ArrayOfSides.length; i++) {
+            current_Angle += ArrayOfAngles[i];
+            //current_point = AnalyticGeometry.GetPointInCircleByDegree(current_Angle, ArrayOfSides[i]);
+            current_point = AnalyticGeometry.GetPointInCircleByDegree(current_Angle, Medium);
+
+            X.push(current_point[0] + center_x);
+            Y.push(current_point[1] + center_y);
+        }
+
+        Coordinates.push(X);
+        Coordinates.push(Y);
+
+        return Coordinates;
+    }
+    */
 
     //Deprecated
     static AngleBetweenVectors(Origin_x, Origin_y, End_x1, End_y1, End_x2, End_y2) {

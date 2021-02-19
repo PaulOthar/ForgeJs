@@ -16,20 +16,25 @@
     <form>
         <input type="color" id="color" name="color">
         <input type="button" id="norcol" value="Set Background Color">
-        <input type="button" id="invcol" value="Set Inverted Background Color">
+        <input type="button" id="invcol" value="Set Inverted Background Color"><br>
+        <input type="range" id="Red" name="Red" min="0" max="255" value="0" class="slider" style="background: red;">
+        <input type="range" id="Green" name="Green" min="0" max="255" value="0" class="slider" style="background: green;">
+        <input type="range" id="Blue" name="Blue" min="0" max="255" value="0" class="slider" style="background: blue;">
     </form>
 
-
-    <input type="range" id="Red" name="Red" min="0" max="255" value="0" class="slider" style="background: red;">
-    <input type="range" id="Green" name="Green" min="0" max="255" value="0" class="slider" style="background: green;">
-    <input type="range" id="Blue" name="Blue" min="0" max="255" value="0" class="slider" style="background: blue;">
-
+    <form>
+        <label for="Polygon" id="PolygonLabel">Polygon Sides Modifiers:</label><br>
+        <input type="text" id="Polygon" name="Polygon">
+        <input type="button" id="Generate" value="Generate Polygon">
+    </form>
 
     <script src="js/GraphicManager.js"></script>
     <script src="js/ShapeManager.js"></script>
     <script src="js/CustomMath.js"></script>
     <script src="js/AnalyticGeometry.js"></script>
     <script src="js/MouseManager.js"></script>
+
+    <script src="js/HTMLElements.js"></script>
     
     <script src="js/main.js"></script>
 </body>
